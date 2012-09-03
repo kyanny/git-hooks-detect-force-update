@@ -35,15 +35,15 @@ task :default do
           run 'git push origin master -q'
         end
 
-        puts 'IN test_1'
+        puts '--> IN test_1'
         run 'git log --oneline'
       end
 
       Dir.chdir('test_2') do
-        run 'date >> README'
+        run 'uptime >> README'
         run 'git add .'
         run 'git commit -m "."'
-        puts 'IN test_2'
+        puts '--> IN test_2'
         run 'git log --oneline'
       end
 

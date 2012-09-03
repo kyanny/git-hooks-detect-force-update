@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-puts 'hello'
 
 oldrev, newrev, refname = STDIN.read.strip.split(/ /)
 puts "oldrev=#{oldrev}"
