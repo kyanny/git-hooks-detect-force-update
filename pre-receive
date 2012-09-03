@@ -4,3 +4,9 @@ oldrev, newrev, refname = STDIN.read.strip.split(/ /)
 puts "oldrev=#{oldrev}"
 puts "newrev=#{newrev}"
 puts "refname=#{refname}"
+
+puts '-' * 80
+puts `git rev-list #{oldrev}`
+
+puts '-' * 80
+puts `git rev-list #{newrev}`
