@@ -40,8 +40,7 @@ def install_hook(hook_name)
   run "chmod a+x test.git/hooks/#{hook_name}"
 end
 
-desc 'git hooks test detect force update'
-task :default do
+task :do_task do
   $pwd = Dir.getwd
 
   Dir.mktmpdir do |tmp|
@@ -57,7 +56,9 @@ task :default do
       clone('test2') # HEAD is 'B'
 
       Dir.chdir('test1') do
-        write; commit; write; commit; tag('O'); push # HEAD is 'O'
+        if $is_forced_update
+          write; commit; write; commit; tag('O'); push # HEAD is 'O'
+        end
       end
 
       install_hook('pre-receive')
@@ -70,4 +71,16 @@ task :default do
       end
     end
   end
+end
+
+desc 'git hooks test'
+task :normal_push do
+  $is_forced_update = false
+  do_task
+end
+
+desc 'git hooks test detect forced update'
+task :forced_push do
+  $is_forced_update = true
+  do_task
 end
