@@ -16,7 +16,7 @@ This is a sample git pre-receive hook script for learning about how to detect fo
 
 ## Step-by-Step introduction
 
-Firstly, I describe a syntax of `[git-rev-list(1)](http://git-scm.com/docs/git-rev-list)`.
+Firstly, I describe a syntax of [git-rev-list(1)](http://git-scm.com/docs/git-rev-list).
 
 In this case, we assume within a Git working repository that has this straight history.
 
