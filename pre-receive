@@ -1,49 +1,46 @@
 #!/usr/bin/env ruby
 
 def line(m)
-  puts '-' * 5 + " #{m} " + '-' * 60
+  puts
+  puts '-----' + " #{m} " + '-----'
 end
 
 def show(oldrev, newrev, refname)
-  command = "git merge-base #{oldrev} #{newrev}"
+  command = "git rev-parse --short $(git merge-base #{oldrev} #{newrev})"
   puts command
   system command
 
-  line('oldrev')
-  command = "git rev-list #{oldrev}"
+  command = "git rev-list --abbrev-commit #{oldrev}"
   line command
   system command
 
-  line('newrev')
-  command = "git rev-list #{newrev}"
+  command = "git rev-list --abbrev-commit #{newrev}"
   line command
   system command
 
-  line('oldrev ^newrev')
-  command = "git rev-list #{oldrev} ^#{newrev}"
+  command = "git rev-list --abbrev-commit #{oldrev} ^#{newrev}"
   line command
   system command
 
-  line('^oldrev newrev')
-  command = "git rev-list ^#{oldrev} #{newrev}"
+  command = "git rev-list --abbrev-commit ^#{oldrev} #{newrev}"
   line command
   system command
-
-  # puts "oldrev=#{oldrev}"
-  # puts "newrev=#{newrev}"
-  # puts "refname=#{refname}"
-
-  # puts '-' * 80
-  # # puts `git rev-list #{oldrev}`
-
-  # puts '-' * 80
-  # # puts `git rev-list master | grep $(git rev-parse master@{1})`
 end
 
 while line = STDIN.gets
   oldrev, newrev, refname = line.strip.split(/ /)
-  show(oldrev, newrev, refname)
+  line 'arguments'
+  puts "oldrev = #{oldrev}"
+  puts "newrev = #{newrev}"
+  puts "refname = #{refname}"
+  puts
+
+  o = `git rev-parse --short #{oldrev}`.chomp
+  n = `git rev-parse --short #{newrev}`.chomp
+  puts "o = #{o}"
+  puts "n = #{n}"
+
+  puts
+  show(o, n, refname)
+  puts                          # space
 end
-
-
-
