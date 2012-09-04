@@ -1,5 +1,7 @@
 # How to detect forced update or not from in Git hooks script
 
+https://github.com/kyanny/git-hooks-detect-force-update
+
 This is a sample git pre-receive hook script for learning about how to detect forced update.
 
 ## Conclusion
@@ -65,7 +67,6 @@ If this command show none of commits, new tree was normally updated, so forced u
 
 ## See Also
 
- * [Sample git pre-receive hook script for learning about how to detect forced update](https://github.com/kyanny/git-hooks-detect-force-update)
  * [git-rev-list(1)](http://git-scm.com/docs/git-rev-list)
  * [Git hook example: post-receive-email](http://git.gnus.org/gnus.git/hooks/post-receive-email)
  * [git - How to detect a forced update - Stack Overflow](http://stackoverflow.com/questions/10319110/how-to-detect-a-forced-update)
