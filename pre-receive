@@ -9,7 +9,7 @@ def show(oldrev, newrev, refname)
   puts `git rev-list #{oldrev}`
 
   puts '-' * 80
-  puts `git rev-list #{newrev}`
+  puts `git rev-list origin/master | grep $(git rev-parse origin/mastrer@{1})`
 end
 
 while line = STDIN.gets
