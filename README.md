@@ -4,13 +4,13 @@ This is a sample git pre-receive hook script for learning about how to detect fo
 
 ## Conclusion
 
-> $ git rev-list oldrev ^newrev
+    $ git rev-list oldrev ^newrev
 
 ## How to test
 
-> $ rake -T
-> rake forced_push  # git hooks test detect forced update
-> rake normal_push  # git hooks test
+    $ rake -T
+    rake forced_push  # git hooks test detect forced update
+    rake normal_push  # git hooks test
 
 ## Step-by-Step introduction
 
@@ -18,23 +18,23 @@ Firstly, I describe a syntax of `[git-rev-list(1)](http://git-scm.com/docs/git-r
 
 In this case, we assume within a Git working repository that has this straight history.
 
->   1 --- 2 --- O --- X --- 3 --- 4 --- N
+    1 --- 2 --- O --- X --- 3 --- 4 --- N
 
 General usage of `git-rev-list` is below.
 
-> $ git rev-list N
+    $ git rev-list N
 
 This command will show all of commits reachable from commit N (note: `git-rev-list` shows commits *reverse chronological order*)
 
 `git-rev-list` accepts multiple arguments.
 
-> $ git rev-list N O
+    $ git rev-list N O
 
 This command will show same output as `git rev-list N`, because commit O is an ancestor of commit N.
 
 Then, `git-rev-list` allows you to exclude commits from output.
 
-> $ git rev-list N ^O
+    $ git rev-list N ^O
 
 ^O means that to exclude commits reachable from O, so this command will show N, 4, 3, X (note: O is excluded)
 
@@ -44,9 +44,9 @@ Since we are learned about `git-rev-list`, I describe a case about forced update
 
 In this case, we assume within a Git working repository that has this complex history.
 
->   * --- B --- * --- O ($oldrev)
->          \
->           * --- X --- * --- N ($newrev)
+    * --- B --- * --- O ($oldrev)
+           \
+            * --- X --- * --- N ($newrev)
 
  1. In old tree, we had 4 commits (*, B, *, O) and pushed them to remote.
  2. We checkout a new branch from commit B, it's new tree.
