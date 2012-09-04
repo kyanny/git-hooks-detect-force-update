@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
 
 def line(m)
   puts
@@ -20,6 +21,7 @@ def show(oldrev, newrev, refname)
 
   command = "git rev-list --abbrev-commit #{oldrev} ^#{newrev}"
   line command
+  puts '# If this command outputs any commit (sha1), push is --force !'
   system command
 
   command = "git rev-list --abbrev-commit ^#{oldrev} #{newrev}"

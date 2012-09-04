@@ -76,11 +76,11 @@ end
 desc 'git hooks test'
 task :normal_push do
   $is_forced_update = false
-  do_task
+  Rake::Task['do_task'].invoke
 end
 
 desc 'git hooks test detect forced update'
 task :forced_push do
   $is_forced_update = true
-  do_task
+  Rake::Task['do_task'].invoke
 end
