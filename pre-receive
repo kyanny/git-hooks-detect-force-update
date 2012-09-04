@@ -1,15 +1,43 @@
 #!/usr/bin/env ruby
 
+def line(m)
+  puts '-' * 5 + " #{m} " + '-' * 60
+end
+
 def show(oldrev, newrev, refname)
-  puts "oldrev=#{oldrev}"
-  puts "newrev=#{newrev}"
-  puts "refname=#{refname}"
+  command = "git merge-base #{oldrev} #{newrev}"
+  puts command
+  system command
 
-  puts '-' * 80
-  puts `git rev-list #{oldrev}`
+  line('oldrev')
+  command = "git rev-list #{oldrev}"
+  line command
+  system command
 
-  puts '-' * 80
-  puts `git rev-list origin/master | grep $(git rev-parse origin/mastrer@{1})`
+  line('newrev')
+  command = "git rev-list #{newrev}"
+  line command
+  system command
+
+  line('oldrev ^newrev')
+  command = "git rev-list #{oldrev} ^#{newrev}"
+  line command
+  system command
+
+  line('^oldrev newrev')
+  command = "git rev-list ^#{oldrev} #{newrev}"
+  line command
+  system command
+
+  # puts "oldrev=#{oldrev}"
+  # puts "newrev=#{newrev}"
+  # puts "refname=#{refname}"
+
+  # puts '-' * 80
+  # # puts `git rev-list #{oldrev}`
+
+  # puts '-' * 80
+  # # puts `git rev-list master | grep $(git rev-parse master@{1})`
 end
 
 while line = STDIN.gets

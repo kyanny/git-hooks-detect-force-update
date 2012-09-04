@@ -39,14 +39,12 @@ task :default do
       Dir.chdir('test_1') do
         write; commit; push;
         write; commit; push;
-        write; commit; push;
       end
 
       run 'git clone test.git test_2 -q'
 
       Dir.chdir('test_1') do
         2.times do
-          write; commit; push;
           write; commit; push;
           write; commit; push;
         end
@@ -60,7 +58,6 @@ task :default do
       end
 
       Dir.chdir('test_2') do
-        write; commit; push;
         write; commit; push;
         write; commit; push;
 
@@ -78,7 +75,7 @@ task :default do
 
       puts '-' * 80
       Dir.chdir('test_2') do
-        run 'git push -f --all', verbose: true
+        run 'git push -f origin master', verbose: true
       end
     end
   end
