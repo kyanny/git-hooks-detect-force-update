@@ -52,7 +52,9 @@ $ git rev-list N ^O
 
 ---
 
+Since we are learned about `git-rev-list`, I describe a case about forced update occured.
 
+In this case, we assume within a Git working repository that has this complex history.
 
 ```
    * --- B --- * --- O ($oldrev)
@@ -60,8 +62,24 @@ $ git rev-list N ^O
            * --- X --- * --- N ($newrev)
 ```
 
+ 1. In old tree, we had 4 commits (*, B, *, O) and pushed them to remote.
+ 2. We checkout a new branch from commit B, it's new tree.
+ 3. In new tree, we had 4 commits (*, X, *, N) and pushed them to remote with --force option!
+
+When pushed, hook pre-receive script invoked with standard input. The format of stdin parameter is described at [githooks(5)](http://git-scm.com/docs/githooks).
+
+Typically, we extract two commit object sha1 from stdin - oldrev and newrev. oldrev is *HEAD of old tree*, newrev is *HEAD of new tree*.
+
+In this situation, we can detect forced push by `git-rev-list` output.
+
+`git rev-list oldrev ^newrev` shows the commits reachable from oldrev but not reachable from newrev. This shows the commits *existed only old tree*.
+If this command show any commits, old tree was replaced with new tree, so forced update was occured. This is what we want!
+
+If this command show none of commits, new tree was normally updated, so forced update was not occured. Simply.
+
 ## See Also
 
+ * [Sample git pre-receive hook script for learning about how to detect forced update](https://github.com/kyanny/git-hooks-detect-force-update)
  * [git-rev-list(1)](http://git-scm.com/docs/git-rev-list)
  * [Git hook example: post-receive-email](http://git.gnus.org/gnus.git/hooks/post-receive-email)
  * [git - How to detect a forced update - Stack Overflow](http://stackoverflow.com/questions/10319110/how-to-detect-a-forced-update)
