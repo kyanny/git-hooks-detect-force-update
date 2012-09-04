@@ -1,12 +1,21 @@
 #!/usr/bin/env ruby
 
-oldrev, newrev, refname = STDIN.read.strip.split(/ /)
-puts "oldrev=#{oldrev}"
-puts "newrev=#{newrev}"
-puts "refname=#{refname}"
+def show(oldrev, newrev, refname)
+  puts "oldrev=#{oldrev}"
+  puts "newrev=#{newrev}"
+  puts "refname=#{refname}"
 
-puts '-' * 80
-puts `git rev-list #{oldrev}`
+  puts '-' * 80
+  puts `git rev-list #{oldrev}`
 
-puts '-' * 80
-puts `git rev-list #{newrev}`
+  puts '-' * 80
+  puts `git rev-list #{newrev}`
+end
+
+while line = STDIN.gets
+  oldrev, newrev, refname = line.strip.split(/ /)
+  show(oldrev, newrev, refname)
+end
+
+
+

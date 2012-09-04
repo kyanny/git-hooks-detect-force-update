@@ -1,8 +1,26 @@
 require 'tmpdir'
+require 'securerandom'
 
 def run(command, options={})
   puts command if options[:verbose]
   system command
+end
+
+def write
+  open('README', 'a'){ |f| f.puts SecureRandom.uuid }
+end
+
+def commit
+  run 'git add .'
+  run 'git commit -m "." -q'
+end
+
+def push
+  run 'git push origin master -q'
+end
+
+def branch(branch_name)
+  run "git branch #{branch_name}"
 end
 
 desc 'git hooks test detect force update'
@@ -15,24 +33,22 @@ task :default do
       run 'git clone test.git test_1 -q'
       Dir.chdir('test_1') do
         run 'git commit --allow-empty -m "Initial commit" -q'
-        run 'git push origin master -q'
+        push
       end
 
       Dir.chdir('test_1') do
-        run 'date >> README'
-        run 'git add .'
-        run 'git commit -m "." -q'
-        run 'git push origin master -q'
+        write; commit; push;
+        write; commit; push;
+        write; commit; push;
       end
 
       run 'git clone test.git test_2 -q'
 
       Dir.chdir('test_1') do
         2.times do
-          run 'date >> README'
-          run 'git add .'
-          run 'git commit -m "." -q'
-          run 'git push origin master -q'
+          write; commit; push;
+          write; commit; push;
+          write; commit; push;
         end
 
         puts '--> IN test_1'
@@ -40,9 +56,14 @@ task :default do
       end
 
       Dir.chdir('test_2') do
-        run 'uptime >> README'
-        run 'git add .'
-        run 'git commit -m "."'
+        branch('foo'); branch('bar'); branch('baz');
+      end
+
+      Dir.chdir('test_2') do
+        write; commit; push;
+        write; commit; push;
+        write; commit; push;
+
         puts '--> IN test_2'
         run 'git log --oneline'
       end
@@ -57,7 +78,7 @@ task :default do
 
       puts '-' * 80
       Dir.chdir('test_2') do
-        run 'git push -f origin master', verbose: true
+        run 'git push -f --all', verbose: true
       end
     end
   end
