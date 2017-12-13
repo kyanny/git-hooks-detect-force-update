@@ -68,6 +68,6 @@ If this command show none of commits, new tree was normally updated, so forced u
 ## See Also
 
  * [git-rev-list(1)](http://git-scm.com/docs/git-rev-list)
- * [Git hook example: post-receive-email](http://git.gnus.org/gnus.git/hooks/post-receive-email)
+ * [Git hook example: post-receive-email](https://github.com/git/git/blob/master/contrib/hooks/post-receive-email)
  * [git - How to detect a forced update - Stack Overflow](http://stackoverflow.com/questions/10319110/how-to-detect-a-forced-update)
  * [githooks - Git hook to detect push --mirror - Stack Overflow](http://stackoverflow.com/questions/9210957/git-hook-to-detect-push-mirror)
